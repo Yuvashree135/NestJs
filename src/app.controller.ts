@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Query, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Query, Post, Body, Ip, Res, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessageModel } from './message.dto';
+import { Response } from 'express';
 
 @Controller('api/v1')
 export class AppController {
@@ -16,9 +17,25 @@ export class AppController {
     return this.appService.getWelcomeMessage(params.name);
   }
 
+  // to use the value directly specify in the braces.
+  @Get('nameParam/:name')
+  getParamName(@Param('name') name: string): string {
+    return this.appService.getWelcomeMessage(name);
+  }
+
   @Get('values')
   getRequestQuery(@Query() query: MessageModel): string {
     return query.name;
+  }
+
+  @Get('valuesJson')
+  getResponseJson(@Query() query: MessageModel, @Res() res: Response): Response<MessageModel> {
+    return res.status(HttpStatus.OK).send(query);
+  }
+
+  @Get('valuesName')
+  getRequestQueryParam(@Query('name') query: string): string {
+    return query;
   }
 
   @Post('postMessage')
