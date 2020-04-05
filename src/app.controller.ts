@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, Post, Body, Ip, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Param, Query, Post, Body, Res, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessageModel } from './message.dto';
 import { Response } from 'express';
